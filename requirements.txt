@@ -36,7 +36,6 @@ langchain-google-genai==2.0.9
 langchain-text-splitters==0.3.5
 langsmith==0.3.4
 multidict==6.1.0
-numpy==2.2.2
 orjson==3.10.15
 packaging==24.2
 pandas==2.2.3
