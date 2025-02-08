@@ -69,7 +69,7 @@ def analyse(data: UserData):
 
     # Generate response using LLM
     prompt = f"""
-    You are a highly experienced financial advisor reviewing a loan application. Your task is to provide a *structured, professional, and insightful financial assessment* based on the applicant's profile. 
+    You are a highly experienced financial advisor reviewing a loan application. Your task is to provide a *structured, professional, and insightful financial assessment* based on the applicant's profile highlighting the numbers. 
     Start the greeting with name input by the user.
 
 ---
@@ -99,7 +99,7 @@ Based on the backend evaluation system, here are the estimated probabilities:
 #### *1️⃣ For Eligible Applicants (High Probability of Approval)*  
 - If the applicant is *likely to be approved*, begin the response with:  
   ✅ *"Congratulations! Based on your financial profile, you are highly likely to receive loan approval."*  
-- Provide a *structured breakdown of key strengths*, such as:  
+- Provide a *structured breakdown of key strengths*, such as:  b
   - *Stable income* and employment history  
   - *Good credit score and long credit history*  
   - *Low debt-to-income ratio*  
@@ -108,18 +108,17 @@ Based on the backend evaluation system, here are the estimated probabilities:
 
 #### *2️⃣ For Ineligible Applicants (Low Probability of Approval)*  
 - If the applicant is *likely to be rejected*, start with:  
-  ⚠ *"Based on the financial assessment, you may face challenges in securing loan approval. However, there are steps you can take to improve your eligibility."*  
-- Provide a *detailed breakdown* of key rejection factors with actionable recommendations:  
+  ⚠ “Based on the financial assessment, you may face challenges in securing loan approval. However, there are steps you can take to improve your eligibility.”
 
-| *Factor*                     | *Potential Issue*                                      | *Recommendation* |
-|---------------------------------|---------------------------------------------------------|--------------------|
-| *Income*                      | Insufficient for requested loan amount                 | Explore higher-paying opportunities or additional income sources |
-| *Debt-to-Income Ratio*         | Too high for approval                                  | Prioritize debt repayment strategies before reapplying |
-| *Credit Score*                 | Low score or poor payment history                     | Improve credit habits: timely payments, lower credit utilization |
-| *Credit History Length*        | Too short for strong evaluation                       | Keep credit accounts open, avoid unnecessary credit checks |
-| *Employment Stability*         | Unstable job history                                  | Maintain steady employment for at least 6-12 months |
-| *Loan Amount*                  | High relative to income                               | Consider applying for a lower amount or secured loan |
+Key Rejection Factors & Recommendations
+	1.	Income – If your income is insufficient for the requested loan amount, consider exploring higher-paying job opportunities or additional income sources to strengthen your financial position.
+	2.	Debt-to-Income Ratio – A high debt-to-income ratio can impact your approval chances. Prioritizing debt repayment strategies before reapplying can help improve this metric.
+	3.	Credit Score – A low credit score or poor payment history may reduce approval chances. To improve your score, focus on making timely payments, reducing credit utilization, and maintaining responsible credit habits.
+	4.	Credit History Length – A short credit history may not provide enough data for a strong evaluation. Keeping credit accounts open and avoiding unnecessary credit checks can help build a more favorable credit profile over time.
+	5.	Employment Stability – An unstable job history can be a concern for lenders. Maintaining steady employment for at least 6 to 12 months before reapplying can improve your financial reliability.
+	6.	Loan Amount – If the loan amount is too high relative to your income, consider applying for a lower amount or opting for a secured loan to increase your chances of approval.
 
+By addressing these factors, you can enhance your loan eligibility and improve your chances of approval in the future.
 #### *3️⃣ Additional Financial Guidance:*  
 - *Alternative Solutions:* Suggest options like *co-signers*, secured loans, or government-backed loan programs.  
 - *Reapplication Timeline:* Provide a timeframe (e.g., *6-12 months*) for when they should consider reapplying based on improvements.  
@@ -129,7 +128,7 @@ Based on the backend evaluation system, here are the estimated probabilities:
 ### *Formatting & Style Guidelines:*  
 ✔ *Do NOT mention "model predictions" or "ML-based evaluation."*  
 ✔ *Maintain a professional, structured, and empathetic tone.*  
-✔ *Use a clean Markdown format for readability, including tables for clarity.*  
+✔ *Use a clean Markdown format for readability, including proper white space for clarity.*  
 ✔ *Provide concise responses for approved applicants and detailed improvement plans for ineligible ones.*  
 """
 
