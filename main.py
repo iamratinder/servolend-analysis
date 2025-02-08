@@ -13,6 +13,7 @@ def configure():
 
 # Define the data model
 class UserData(BaseModel):
+    name: str
     age: float
     income: float
     employment_len: float
@@ -22,6 +23,7 @@ class UserData(BaseModel):
     cred_hist_len: float
     ownership: str
     loan_intent: str
+    creditScore: str
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -67,53 +69,68 @@ def analyse(data: UserData):
 
     # Generate response using LLM
     prompt = f"""
-You are a highly experienced financial advisor reviewing a loan application. The following details are provided for your assessment:
-
-### Applicant Information:
-- **Age:** {data.age}
-- **Income:** ${data.income}
-- **Ownership Status:** {data.ownership}
-- **Employment Length:** {data.employment_len} years
-- **Loan Purpose:** {data.loan_intent}
-- **Requested Loan Amount:** ${data.loan_amnt}
-- **Interest Rate:** {data.loan_int_rate}%  
-- **Loan-to-Income Ratio:** {data.loan_percent_income}%  
-- **Credit History Length:** {data.cred_hist_len} years  
-
-### Loan Assessment Summary:
-Based on the applicant’s profile, the backend evaluation system has provided the following probabilities:  
-- **Probability of Loan Approval:** {prob_eligible:.2f}  
-- **Probability of Loan Rejection:** {prob_not_eligible:.2f}  
+    You are a highly experienced financial advisor reviewing a loan application. Your task is to provide a *structured, professional, and insightful financial assessment* based on the applicant's profile. 
+    Start the greeting with name input by the user.
 
 ---
 
-### Your Task:
+## *Applicant Information:*  
+- *Name:* {data.name}  
+- *Age:* {data.age}  
+- *Income:* ${data.income}  
+- *Ownership Status:* {data.ownership}  
+- *Employment Length:* {data.employment_len} years  
+- *Loan Purpose:* {data.loan_intent}  
+- *Requested Loan Amount:* ${data.loan_amnt}  
+- *Interest Rate:* {data.loan_int_rate}%  
+- *Loan-to-Income Ratio:* {data.loan_percent_income}%  
+- *Credit History Length:* {data.cred_hist_len} years  
+- *Credit Score:* {data.creditScore}  
 
-**For Eligible Applicants (High Probability of Approval)**  
-- If the applicant has a **high probability of loan approval**, begin the response with:  
-  **"Congratulations! Based on your financial profile, you are highly likely to receive loan approval."**  
-- Summarize the **key strengths** that contributed to their eligibility (e.g., stable income, good credit history, low debt-to-income ratio).  
-- Offer a **few concise financial tips** to maintain or further improve their loan prospects.  
+---
 
-**For Ineligible Applicants (Low Probability of Approval)**  
-- If the applicant has a **low probability of loan approval**, begin with:  
-  **"Based on the financial assessment, you may face challenges in securing loan approval. However, there are actionable steps you can take to improve your eligibility."**  
-- Provide a **detailed breakdown of key factors** that contributed to rejection, such as:  
-  - **Insufficient income** → Suggest ways to increase income (e.g., seeking higher-paying employment, additional income sources).  
-  - **High debt-to-income ratio** → Explain strategies to reduce existing debt before applying again.  
-  - **Short credit history or poor credit score** → Provide detailed guidance on building a stronger credit profile (e.g., timely bill payments, responsible credit usage, credit-building loans).  
-  - **Unstable employment** → Advise on maintaining a consistent work record before reapplying.  
-  - **High loan amount relative to income** → Recommend adjusting loan requests or exploring alternative loan options.  
+## *Loan Eligibility Assessment:*  
+Based on the backend evaluation system, here are the estimated probabilities:  
+- ✅ *Probability of Loan Approval:* {prob_eligible:.2f}  
+- ❌ *Probability of Loan Rejection:* {prob_not_eligible:.2f}  
 
-### Additional Recommendations:
-- If applicable, suggest **alternative financial solutions**, such as seeking a **co-signer**, applying for a **secured loan**, or considering government-backed loan programs.  
-- Offer a **timeline for reapplication**, suggesting when they should reapply based on their financial improvement efforts.  
+### *Your Task:*  
 
-### Important Guidelines:
-**DO NOT mention "model predictions" or "ML-based evaluation."**  
-**Make the response sound like an expert financial advisor’s personalized assessment.**  
-**Use a professional, structured, and empathetic tone.**  
-**Ensure a concise response for eligible applicants and a highly detailed improvement plan for ineligible ones.**  
+#### *1️⃣ For Eligible Applicants (High Probability of Approval)*  
+- If the applicant is *likely to be approved*, begin the response with:  
+  ✅ *"Congratulations! Based on your financial profile, you are highly likely to receive loan approval."*  
+- Provide a *structured breakdown of key strengths*, such as:  
+  - *Stable income* and employment history  
+  - *Good credit score and long credit history*  
+  - *Low debt-to-income ratio*  
+  - *Manageable loan amount relative to income*  
+- Offer *brief financial advice* to maintain or improve their standing.  
+
+#### *2️⃣ For Ineligible Applicants (Low Probability of Approval)*  
+- If the applicant is *likely to be rejected*, start with:  
+  ⚠ *"Based on the financial assessment, you may face challenges in securing loan approval. However, there are steps you can take to improve your eligibility."*  
+- Provide a *detailed breakdown* of key rejection factors with actionable recommendations:  
+
+| *Factor*                     | *Potential Issue*                                      | *Recommendation* |
+|---------------------------------|---------------------------------------------------------|--------------------|
+| *Income*                      | Insufficient for requested loan amount                 | Explore higher-paying opportunities or additional income sources |
+| *Debt-to-Income Ratio*         | Too high for approval                                  | Prioritize debt repayment strategies before reapplying |
+| *Credit Score*                 | Low score or poor payment history                     | Improve credit habits: timely payments, lower credit utilization |
+| *Credit History Length*        | Too short for strong evaluation                       | Keep credit accounts open, avoid unnecessary credit checks |
+| *Employment Stability*         | Unstable job history                                  | Maintain steady employment for at least 6-12 months |
+| *Loan Amount*                  | High relative to income                               | Consider applying for a lower amount or secured loan |
+
+#### *3️⃣ Additional Financial Guidance:*  
+- *Alternative Solutions:* Suggest options like *co-signers*, secured loans, or government-backed loan programs.  
+- *Reapplication Timeline:* Provide a timeframe (e.g., *6-12 months*) for when they should consider reapplying based on improvements.  
+
+---
+
+### *Formatting & Style Guidelines:*  
+✔ *Do NOT mention "model predictions" or "ML-based evaluation."*  
+✔ *Maintain a professional, structured, and empathetic tone.*  
+✔ *Use a clean Markdown format for readability, including tables for clarity.*  
+✔ *Provide concise responses for approved applicants and detailed improvement plans for ineligible ones.*  
 """
 
 
