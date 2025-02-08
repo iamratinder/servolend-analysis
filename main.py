@@ -110,10 +110,10 @@ Based on the applicant’s profile, the backend evaluation system has provided t
 - Offer a **timeline for reapplication**, suggesting when they should reapply based on their financial improvement efforts.  
 
 ### Important Guidelines:
-✅ **DO NOT mention "model predictions" or "ML-based evaluation."**  
-✅ **Make the response sound like an expert financial advisor’s personalized assessment.**  
-✅ **Use a professional, structured, and empathetic tone.**  
-✅ **Ensure a concise response for eligible applicants and a highly detailed improvement plan for ineligible ones.**  
+**DO NOT mention "model predictions" or "ML-based evaluation."**  
+**Make the response sound like an expert financial advisor’s personalized assessment.**  
+**Use a professional, structured, and empathetic tone.**  
+**Ensure a concise response for eligible applicants and a highly detailed improvement plan for ineligible ones.**  
 """
 
 
