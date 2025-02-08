@@ -76,7 +76,7 @@ def analyse(data: UserData):
     # Generate response using LLM
     prompt = f"""
     You are a highly experienced financial advisor reviewing a loan application. Your task is to provide a *structured, professional, and insightful financial assessment* based on the applicant's profile highlighting the numbers. 
-    Start the greeting with name input by the user.
+    Start the greeting with name input by the user. The whole analysis is with respect to Indian currency so use only ruppee symbol where ever required.
 
 ---
 
