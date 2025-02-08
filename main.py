@@ -67,23 +67,56 @@ def analyse(data: UserData):
 
     # Generate response using LLM
     prompt = f"""
-    A user has applied for a loan.  Their information is as follows:
-    Age: {data.age}
-    Income: {data.income}
-    Ownership: {data.ownership}
-    Employment Length: {data.employment_len}
-    Loan Intent: {data.loan_intent}
-    Loan Amount: {data.loan_amnt}
-    Loan Interest Rate: {data.loan_int_rate}
-    Loan Percent Income: {data.loan_percent_income}
-    Credit History Length: {data.cred_hist_len}
+You are a highly experienced financial advisor reviewing a loan application. The following details are provided for your assessment:
 
-    The loan defaulter model predicted: {prob_eligible} and {prob_not_eligible} which is the prob of being eligible or not respectively
+### Applicant Information:
+- **Age:** {data.age}
+- **Income:** ${data.income}
+- **Ownership Status:** {data.ownership}
+- **Employment Length:** {data.employment_len} years
+- **Loan Purpose:** {data.loan_intent}
+- **Requested Loan Amount:** ${data.loan_amnt}
+- **Interest Rate:** {data.loan_int_rate}%  
+- **Loan-to-Income Ratio:** {data.loan_percent_income}%  
+- **Credit History Length:** {data.cred_hist_len} years  
 
-    Based on this prediction, provide information about their loan eligibility status, potential loan options, and next steps. Explain possible reasons and suggest improvements.
-    Also note that do not include things like as prediction of model etc.... just provide your response as you only is analyzing and providing summary for the decision made by the model at the backend
-    Also if the applicant is eligible means prediction is 0 (not defaulter) than in that case also tell congratulations you are likely to get the loan.
-    """
+### Loan Assessment Summary:
+Based on the applicant’s profile, the backend evaluation system has provided the following probabilities:  
+- **Probability of Loan Approval:** {prob_eligible:.2f}  
+- **Probability of Loan Rejection:** {prob_not_eligible:.2f}  
+
+---
+
+### Your Task:
+
+**For Eligible Applicants (High Probability of Approval)**  
+- If the applicant has a **high probability of loan approval**, begin the response with:  
+  **"Congratulations! Based on your financial profile, you are highly likely to receive loan approval."**  
+- Summarize the **key strengths** that contributed to their eligibility (e.g., stable income, good credit history, low debt-to-income ratio).  
+- Offer a **few concise financial tips** to maintain or further improve their loan prospects.  
+
+**For Ineligible Applicants (Low Probability of Approval)**  
+- If the applicant has a **low probability of loan approval**, begin with:  
+  **"Based on the financial assessment, you may face challenges in securing loan approval. However, there are actionable steps you can take to improve your eligibility."**  
+- Provide a **detailed breakdown of key factors** that contributed to rejection, such as:  
+  - **Insufficient income** → Suggest ways to increase income (e.g., seeking higher-paying employment, additional income sources).  
+  - **High debt-to-income ratio** → Explain strategies to reduce existing debt before applying again.  
+  - **Short credit history or poor credit score** → Provide detailed guidance on building a stronger credit profile (e.g., timely bill payments, responsible credit usage, credit-building loans).  
+  - **Unstable employment** → Advise on maintaining a consistent work record before reapplying.  
+  - **High loan amount relative to income** → Recommend adjusting loan requests or exploring alternative loan options.  
+
+### Additional Recommendations:
+- If applicable, suggest **alternative financial solutions**, such as seeking a **co-signer**, applying for a **secured loan**, or considering government-backed loan programs.  
+- Offer a **timeline for reapplication**, suggesting when they should reapply based on their financial improvement efforts.  
+
+### Important Guidelines:
+✅ **DO NOT mention "model predictions" or "ML-based evaluation."**  
+✅ **Make the response sound like an expert financial advisor’s personalized assessment.**  
+✅ **Use a professional, structured, and empathetic tone.**  
+✅ **Ensure a concise response for eligible applicants and a highly detailed improvement plan for ineligible ones.**  
+"""
+
+
 
     ans = llm.invoke(prompt)
     return {"message": ans.content}
