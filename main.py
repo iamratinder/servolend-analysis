@@ -36,7 +36,7 @@ app.add_middleware(
 )
 
 # Initialize Google Generative AI model
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=os.getenv("API_KEY"))
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", google_api_key=os.getenv("api_key"))
 
 @app.post('/analyse')
 def analyse(data: UserData):
